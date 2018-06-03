@@ -4,6 +4,14 @@ body {
     font-family: 'cabin', sans-serif;
 }
 
-#game {
-    margin: 100px;
+.counter {
+    margin-top: 0px;
+}
+
+.game {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+.wins {
+    margin-bottom: 50px;
 }
