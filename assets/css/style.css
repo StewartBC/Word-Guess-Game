@@ -1,0 +1,9 @@
+body {
+    background-image: url(../images/Background.jpg);
+    color: white;
+    font-family: 'cabin', sans-serif;
+}
+
+#game {
+    margin: 100px;
+}
