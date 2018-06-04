@@ -18,7 +18,7 @@ var pokemon = [
         blanks: [],
         nameArray: [],
         name: "venusaur",
-        pic: "<img src=\"assets/images/Venusaur.png\" alt=\"Venusaur\">"
+        pic: "<img src=\"assets/images/Venusaur.png\" alt=\"Venusaur\">",
     },
     charmander = {
         blanks: [],
@@ -128,7 +128,7 @@ var pokemon = [
         name: "spearow",
         pic: "<img src=\"assets/images/Spearow.png\" alt=\"Spearow\">"
     },
-    Fearow = {
+    fearow = {
         blanks: [],
         nameArray: [],
         name: "fearow",
@@ -200,7 +200,7 @@ var pokemon = [
         name: "nidoking",
         pic: "<img src=\"assets/images/Nidoking.png\" alt=\"Nidoking\">"
     },
-    clefiary = {
+    clefairy = {
         blanks: [],
         nameArray: [],
         name: "clefairy",
@@ -905,7 +905,6 @@ var guesses = []; // array to hold all of the gueeses so that you can check if t
 var correctGuesses = []; // array to hold the correct guesses
 var random = 0; // this is used to choose a random pokemon in the pokemon array
 var wins = 0; // number of wins counter
-var guessCounter = 0; // number of wrong guesses counter
 var word = ""; // holds the name of the current pokemon
 var guessesRemaining = 0; // sets the inital number of guesses
 
@@ -953,7 +952,7 @@ function reset() {
     wrongGuesses = [];
     guesses = [];
     correctGuesses = [];
-    guessesRemaining = 5;
+    guessesRemaining = word.length + 5;
     noCommasBlanks = pokemon[random].blanks.join(" ");
     noCommasName = pokemon[random].nameArray.join(" ");
     document.getElementById("#pic").innerHTML = pokemon[random].pic;
@@ -966,20 +965,21 @@ function reset() {
 reset();// initialize the game when the page first loads
 
 // main logic for the game
-for (k = 0; k < guessesRemaining; k++) {
+for (k = 0; k < guessesRemaining; k++) { // run this loop for as long as the user has guesses remaining
     document.onkeyup = function (event) { // get letter input from user
-        var userGuess = event.key.toLowerCase(); // save user input to variable
+        var userGuess = event.key.toLowerCase(); // save user input to variable and make it lower case
         if (alphabet.indexOf(userGuess) > -1 && guesses.indexOf(userGuess === -1)) { // make sure user input is a letter and hasn't already been guessed
             guesses.push(userGuess); // push user input to guesses array
             if (guessesRemaining > 0) { // check to see if the user has lost
-                if (wrongGuesses.indexOf(userGuess) === -1) { // check to see if user doesn't guessed the wrong letter twice
+                if (wrongGuesses.indexOf(userGuess) === -1) { // check to see if user has already guesses that letter incorrectly
                     // check if user input is part of the pokemon name array and check to see if the input has already been correctly guessed 
                     if (pokemon[random].nameArray.indexOf(userGuess) === -1 && correctGuesses.indexOf(userGuess) === -1) {
                         wrongGuesses.push(userGuess); // push the users wrong guess to the wrong guesses array
                         if (guessesRemaining === 1) { // reset the game if the user has 1 guess remaining and guesses wrong
                             reset();
+                            guessesRemaining++; // add one to guesses in this scenario, otherwise the user only has 4 guesses on their next game
                         }
-                        document.getElementById("#guesses").innerHTML = "Wrong Guesses: " + wrongGuesses; // display wrong guesses to user
+                        document.getElementById("#guesses").innerHTML = "Wrong Guesses:<br> " + wrongGuesses; // display wrong guesses to user
                         guessesRemaining--; // subtract 1 from remaining guesses
                     }
                     document.getElementById("#count").innerHTML = "Guesses Remaining: " + guessesRemaining; // display remaining guesses to user
@@ -991,7 +991,6 @@ for (k = 0; k < guessesRemaining; k++) {
                             pokemon[random].nameArray.splice(pokemon[random].nameArray.indexOf(userGuess), 1, "_"); // replace the letter in pokemon name array with a blank space, so that the user can't guess that letter again
                             noCommasBlanks = pokemon[random].blanks.join(" "); // removes commas from array so it looks nicer when it's displayed to the user
                             document.getElementById("#game").innerHTML = noCommasBlanks; // display the user's current progress in guessing the word
-
                         }
                     } if (noCommasBlanks === noCommasName) { // check if the user won
                         wins++; // increase user wins by 1 if they won
@@ -1001,7 +1000,6 @@ for (k = 0; k < guessesRemaining; k++) {
             } else {
                 reset(); // reset the game if the user runs out of guesses
             }
-
         }
     }
 }
