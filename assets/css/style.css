@@ -15,3 +15,13 @@ body {
 .wins {
     margin-bottom: 50px;
 }
+
+.blur {
+    -webkit-filter: grayscale(100%) brightness(0);
+    filter: grayscale(100%) brightness(0);
+    opacity: 0.6;
+}
+
+h2 {
+    text-align: center;
+}
