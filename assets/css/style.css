@@ -25,3 +25,8 @@ body {
 h2 {
     text-align: center;
 }
+
+p {
+    margin-left: 110px;
+    margin-top: 50px;
+}

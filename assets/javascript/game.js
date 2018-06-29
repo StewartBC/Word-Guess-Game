@@ -946,7 +946,7 @@ function makeSure() {
 
 // function to reset/initialize the game
 function reset() {
-    $("h2").text("");
+    $("h2").text("Who's that Pokemon?\n");
     changeIndex();
     word = pokemon[random].name;
     addBlanks();
