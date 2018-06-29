@@ -907,6 +907,7 @@ var random = 0; // this is used to choose a random pokemon in the pokemon array
 var wins = 0; // number of wins counter
 var word = ""; // holds the name of the current pokemon
 var guessesRemaining = 0; // sets the inital number of guesses
+var accept = true;
 
 // function to change the current word
 function changeWord() {
@@ -969,6 +970,7 @@ reset();// initialize the game when the page first loads
 // main logic for the game
 // run this loop for as long as the user has guesses remaining
 document.onkeyup = function (event) { // get letter input from user
+    if (accept) {
     var userGuess = event.key.toLowerCase(); // save user input to variable and make it lower case
     if (alphabet.indexOf(userGuess) > -1 && guesses.indexOf(userGuess === -1)) { // make sure user input is a letter and hasn't already been guessed
         guesses.push(userGuess); // push user input to guesses array
@@ -980,8 +982,10 @@ document.onkeyup = function (event) { // get letter input from user
                     if (guessesRemaining === 1) { // reset the game if the user has 1 guess remaining and guesses wrong
                         $("h2").text("Oh no, you ran out of guesses! The pokemon was " + pokemon[random].name + ".")
                         $("p").removeClass("blur");
+                        accept = false;
                         setTimeout(function () {
                             reset();
+                            accept = true;
                         }, 3000);
                         guessesRemaining++; // add one to guesses in this scenario, otherwise the user only has 4 guesses on their next game
                     }
@@ -1002,17 +1006,22 @@ document.onkeyup = function (event) { // get letter input from user
                     wins++; // increase user wins by 1 if they won
                     $("p").removeClass("blur");
                     $("h2").text("You were right! The pokemon was " + pokemon[random].name + ".")
+                    accept = false;
                     setTimeout(function () {
                         reset(); // reset the game if the user won
+                        accept = true;
                     }, 3000);
                 }
             }
         } else {
             $("h2").text("Oh no, you ran out of guesses! The pokemon was " + pokemon[random].name + ".")
             $("p").removeClass("blur");
+            accept = false;
             setTimeout(function () {
                 reset(); // reset the game if the user runs out of guesses
+                accept = true;
             }, 3000);
         }
     }
+}
 }
